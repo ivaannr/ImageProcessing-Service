@@ -18,14 +18,4 @@ public class Utils {
         return baos.toByteArray();
     }
 
-    public static BufferedImage resizeImage(BufferedImage original, int width, int height) {
-        BufferedImage resized = new BufferedImage(width, height, original.getType());
-        Graphics2D g = resized.createGraphics();
-        g.drawImage(original, 0, 0, width, height, null);
-        g.dispose();
-        return resized;
-    }
-
-
-
 }

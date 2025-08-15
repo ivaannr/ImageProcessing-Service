@@ -27,7 +27,6 @@ public class Filters {
             case "rgb-adjust" -> new RGBAdjustFilter();
             case "grayscale" -> new GrayscaleFilter();
             case "convolve" -> new ConvolveFilter();
-            case "laplace" -> new LaplaceFilter();
             case "edge" -> new EdgeFilter();
             case "sharpen" -> new SharpenFilter();
             case "unsharp" -> new UnsharpFilter();

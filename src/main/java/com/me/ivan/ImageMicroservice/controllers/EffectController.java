@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -75,47 +76,6 @@ public class EffectController {
                     .body("<h4>Error processing image: " + ex.getMessage() + "</h4>");
         }
 
-    }
-
-    @GetMapping(value = "/resize/{id}/{filter}", produces = MediaType.TEXT_HTML_VALUE)
-    public ResponseEntity<String> resizeImage(
-            @PathVariable("id") String id,
-            @PathVariable("filter") String filter,
-            @RequestParam("width") int width,
-            @RequestParam("height") int height) throws IOException {
-
-        try {
-            ImageFile image = getImage(id);
-
-            BufferedImage resized = Utils.resizeImage(
-                    Utils.toBufferedImage(image.getContent()), width, height
-            );
-
-            baos.reset();
-            ImageIO.write(resized, "png", baos);
-
-            String base64 = Base64.getEncoder().encodeToString(baos.toByteArray());
-
-            String html = String.format("""
-                <html>
-                <body>
-                    <h4>Image resized to %d x %d with %s filter</h4>
-                    <img src="data:image/png;base64,%s" alt="Resized image">
-                </body>
-                </html>
-                """, width, height, filter, base64);
-
-            return ResponseEntity.ok()
-                    .contentType(MediaType.TEXT_HTML)
-                    .body(html);
-
-        } catch (NoSuchElementException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("<h4>" + ex.getMessage() + "</h4>");
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("<h4>Error processing image: " + ex.getMessage() + "</h4>");
-        }
     }
 
     @GetMapping(value = "/transform/{transformation}/{id}", produces = MediaType.TEXT_HTML_VALUE)

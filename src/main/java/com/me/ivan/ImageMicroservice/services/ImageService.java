@@ -27,4 +27,8 @@ public class ImageService {
         return repository.addFile(image);
     }
 
+    public ImageFile getByID(String id) {
+        return repository.findByID(id);
+    }
+
 }

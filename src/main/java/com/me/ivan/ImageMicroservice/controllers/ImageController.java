@@ -25,6 +25,29 @@ public class ImageController {
         return service.getImages();
     }
 
+    @GetMapping(value = "/{id}")
+    public ImageFile getImageByID(@PathVariable("id") String id) {
+        return service.getByID(id);
+    }
+
+    @GetMapping(value = "/view/{id}", produces = MediaType.TEXT_HTML_VALUE)
+    public ResponseEntity<String> viewImageByID(@PathVariable("id") String id) {
+        ImageFile img = service.getByID(id);
+
+        String base64 = Base64.getEncoder().encodeToString(img.getContent());
+        String html = String.format(
+                "<html><body><h2>Image Viewer</h2>" +
+                        "<div style='margin:10px;text-align:center'>" +
+                        "<img src='data:image/png;base64,%s' width='200'/><br/>%s" +
+                        "</div></body></html>",
+                base64, img.getFileName()
+        );
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.TEXT_HTML)
+                .body(html);
+    }
+
     @GetMapping(value = "/view", produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<String> viewImages() {
         List<ImageFile> images = service.getImages();
@@ -54,21 +77,16 @@ public class ImageController {
         return service.createImageFile(image);
     }
 
-    @DeleteMapping(value = "/{id}", produces = MediaType.TEXT_HTML_VALUE)
-    public ResponseEntity<String> deleteImage(@PathVariable String id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteImage(@PathVariable String id) {
         try {
             service.delete(id);
-            return ResponseEntity.ok()
-                    .contentType(MediaType.TEXT_HTML)
-                    .body("<h4>Image deleted!</h4>");
+            return ResponseEntity.noContent().build();
         } catch (NoSuchElementException ex) {
-            return ResponseEntity.status(404)
-                    .contentType(MediaType.TEXT_HTML)
-                    .body("<h4>Image not found</h4>");
+            return ResponseEntity.notFound().build();
         } catch (Exception ex) {
-            return ResponseEntity.status(500)
-                    .contentType(MediaType.TEXT_HTML)
-                    .body("<h4>Internal server error</h4>");
+            return ResponseEntity.status(500).build();
         }
     }
+
 }

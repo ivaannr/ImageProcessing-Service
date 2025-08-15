@@ -1,4 +1,4 @@
-<h1 id="image-microservice-api">Image Microservice API</h1>
+<h1 id="image-microservice-api">Image Processing API</h1>
 <p>A lightweight microservice for storing and serving image files with database persistence. Built with <strong>Java</strong>, <strong>Spring Boot</strong>, and <strong>SQLite</strong>.</p>
 <hr />
 <h2 id="features">Features</h2>
@@ -95,5 +95,6 @@ cd ImageMicroservice
 <li>Ensure the frontend URL matches the CORS allowed origins.</li>
 </ul>
 <hr />
+
 
 

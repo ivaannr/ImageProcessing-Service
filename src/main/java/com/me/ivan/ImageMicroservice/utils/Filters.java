@@ -42,7 +42,16 @@ public class Filters {
         return filter.filter(image, null);
     }
 
-
+    /**
+     * Crops a portion of the given image to the specified rectangular area.
+     * @param image  the image to be cropped
+     * @param x      the X coordinate of the upper-left corner of the cropping rectangle
+     * @param y      the Y coordinate of the upper-left corner of the cropping rectangle
+     * @param width  the width of the cropping rectangle
+     * @param height the height of the cropping rectangle
+     * @return a new image containing the cropped area
+     * @throws IllegalArgumentException if the specified cropping rectangle is outside the bounds of the image
+     */
     public static BufferedImage cropImage(BufferedImage image, int x, int y, int width, int height) {
         if (x < 0 || y < 0 || x + width > image.getWidth() || y + height > image.getHeight()) {
             throw new IllegalArgumentException("The cropping area is outside the image limits.");
@@ -73,14 +82,19 @@ public class Filters {
         return image;
     }
 
-    private static BufferedImage compressImage(BufferedImage image, double scale) {
-        int newWidth = (int)(image.getWidth() * scale);
-        int newHeight = (int)(image.getHeight() * scale);
-        BufferedImage dest = new BufferedImage(newWidth, newHeight, image.getType());
+    public static BufferedImage compressImage(BufferedImage image, double scale) {
+        if (scale <= 0) scale = 1;
+        int newWidth = (int) Math.min(Math.max(image.getWidth() * scale, 1), 10000);
+        int newHeight = (int) Math.min(Math.max(image.getHeight() * scale, 1), 10000);
+
+        int type = image.getType() != 0 ? image.getType() : BufferedImage.TYPE_INT_ARGB;
+        BufferedImage dest = new BufferedImage(newWidth, newHeight, type);
+
         Graphics2D g = dest.createGraphics();
         g.drawImage(image, 0, 0, newWidth, newHeight, null);
         g.dispose();
         return dest;
     }
+
 
 }

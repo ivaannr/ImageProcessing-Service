@@ -1,13 +1,12 @@
-<h1 id="image-microservice-api">Image Microservice API</h1>
+<h1 id="image-microservice-api">Image Processing API</h1>
 <p>A lightweight microservice for storing and serving image files with database persistence. Built with <strong>Java</strong>, <strong>Spring Boot</strong>, and <strong>SQLite</strong>.</p>
 <hr />
 <h2 id="features">Features</h2>
 <ul>
 <li>Upload, download, and manage images.</li>
-<li>Stores images in an SQLite database.</li>
+<li>Stores images in a database.</li>
 <li>Configurable CORS for frontend integration.</li>
 <li>Automatically generates database tables.</li>
-<li>Supports dynamic server port configuration.</li>
 </ul>
 <hr />
 <h2 id="getting-started">Getting Started</h2>
@@ -86,7 +85,7 @@ cd ImageMicroservice
 <hr />
 <h2 id="configuration">Configuration</h2>
 <ul>
-<li><strong>CORS</strong> is pre-configured to allow requests from <code>http://127.0.0.1:{server.port}</code>.</li>
+<li><strong>CORS</strong> is pre-configured to allow requests from <code>http://127.0.0.1:8080</code>.</li>
 <li>Database file is <code>myDB.db</code> in the project root.</li>
 </ul>
 <hr />
@@ -96,3 +95,6 @@ cd ImageMicroservice
 <li>Ensure the frontend URL matches the CORS allowed origins.</li>
 </ul>
 <hr />
+
+
+

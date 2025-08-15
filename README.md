@@ -20,7 +20,7 @@
 <li>Clone the repository:</li>
 </ol>
 <pre><code class="language-bash">git clone https://github.com/ivaannr/ImageProcessing-Service.git
-cd ImageMicroservice
+cd ImageProcessing-Service
 </code></pre>
 <ol start="2">
 <li>Build the project:</li>
@@ -105,3 +105,4 @@ cd ImageMicroservice
 <li>Ensure the frontend URL matches the CORS allowed origins.</li>
 </ul>
 <hr />
+

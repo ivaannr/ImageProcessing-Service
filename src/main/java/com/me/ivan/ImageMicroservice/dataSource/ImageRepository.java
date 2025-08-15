@@ -1,47 +1,50 @@
 package com.me.ivan.ImageMicroservice.dataSource;
 
 import com.me.ivan.ImageMicroservice.model.ImageFile;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 @Repository
+@Transactional
 public class ImageRepository {
 
-    private List<ImageFile> images = new ArrayList<>();;
+    @PersistenceContext
+    private EntityManager em;
 
     public List<ImageFile> getImages() {
-        return images;
+        return em.createQuery("SELECT i FROM ImageFile i", ImageFile.class)
+                .getResultList();
     }
 
-    public void deleteImage(String id) {
-        boolean removed = images.removeIf(i -> Objects.equals(i.getId(), id));
-        if (!removed) {
-            throw new NoSuchElementException("Image with ID " + id + " not found in the list.");
-        }
-    }
-
-    public ImageFile addFile(ImageFile image) {
-        Objects.requireNonNull(image, "ImageFile cannot be null");
-        boolean inserted = images.add(image);
-        if (!inserted) {
-            throw new IllegalArgumentException(
-                    "Cannot add ImageFile with ID " + image.getId() + " because it already exists."
-            );
+    public ImageFile findById(String id) {
+        ImageFile image = em.find(ImageFile.class, id);
+        if (image == null) {
+            throw new NoSuchElementException("No image found with ID " + id);
         }
         return image;
     }
 
-    public ImageFile findByID(String id) {
-        return images.stream()
-                .filter(i -> Objects.equals(i.getId(), id))
-                .findFirst()
-                .orElseThrow(() ->
-                        new NoSuchElementException("No image found with ID " + id)
-                );
+    public ImageFile addFile(ImageFile image) {
+        if (em.find(ImageFile.class, image.getId()) != null) {
+            throw new IllegalArgumentException(
+                    "Cannot add image with ID " + image.getId() + ", it already exists."
+            );
+        }
+        em.persist(image);
+        return image;
+    }
+    
+    public void deleteImage(String id) {
+        ImageFile image = em.find(ImageFile.class, id);
+        if (image == null) {
+            throw new NoSuchElementException("No image found with ID " + id);
+        }
+        em.remove(image);
     }
 
 }

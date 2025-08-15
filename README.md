@@ -4,10 +4,9 @@
 <h2 id="features">Features</h2>
 <ul>
 <li>Upload, download, and manage images.</li>
-<li>Stores images in an SQLite database.</li>
+<li>Stores images in a database.</li>
 <li>Configurable CORS for frontend integration.</li>
 <li>Automatically generates database tables.</li>
-<li>Supports dynamic server port configuration.</li>
 </ul>
 <hr />
 <h2 id="getting-started">Getting Started</h2>
@@ -96,3 +95,4 @@ cd ImageMicroservice
 <li>Ensure the frontend URL matches the CORS allowed origins.</li>
 </ul>
 <hr />
+

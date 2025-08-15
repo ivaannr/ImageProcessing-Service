@@ -85,7 +85,7 @@ cd ImageMicroservice
 <hr />
 <h2 id="configuration">Configuration</h2>
 <ul>
-<li><strong>CORS</strong> is pre-configured to allow requests from <code>http://127.0.0.1:{server.port}</code>.</li>
+<li><strong>CORS</strong> is pre-configured to allow requests from <code>http://127.0.0.1:8080</code>.</li>
 <li>Database file is <code>myDB.db</code> in the project root.</li>
 </ul>
 <hr />
@@ -95,4 +95,5 @@ cd ImageMicroservice
 <li>Ensure the frontend URL matches the CORS allowed origins.</li>
 </ul>
 <hr />
+
 

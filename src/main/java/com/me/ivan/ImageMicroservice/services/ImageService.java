@@ -1,11 +1,10 @@
 package com.me.ivan.ImageMicroservice.services;
 
 import com.me.ivan.ImageMicroservice.dataSource.ImageFileRepository;
-import com.me.ivan.ImageMicroservice.dataSource.ImageRepository;
-import com.me.ivan.ImageMicroservice.database.ImageFileModel;
+import com.me.ivan.ImageMicroservice.database.ImageFileEntity;
 import com.me.ivan.ImageMicroservice.model.ImageFile;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -21,23 +20,29 @@ public class ImageService {
     public List<ImageFile> getImages() {
         return repository.findAll()
                 .stream()
-                .map(m -> new ImageFile(m.getFileName(), m.getContent()))
+                .map(m -> new ImageFile(m.getId(), m.getFileName(), m.getContent()))
                 .toList();
     }
 
+    @Transactional
     public void delete(String id) {
-        repository.deleteById(id);
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        } else {
+            throw new NoSuchElementException("Image not found");
+        }
     }
 
     public ImageFile createImageFile(ImageFile image) {
-        ImageFileModel model = new ImageFileModel(image.getFileName(), image.getContent());
-        ImageFileModel saved = repository.save(model);
-        return new ImageFile(saved.getFileName(), saved.getContent());
+        ImageFileEntity entity = new ImageFileEntity(image.getFileName(), image.getContent());
+        ImageFileEntity saved = repository.save(entity);
+        return new ImageFile(saved.getId(), saved.getFileName(), saved.getContent());
     }
 
     public ImageFile getByID(String id) {
-        ImageFileModel model = repository.findById(id)
+        ImageFileEntity entity = repository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("No image found with ID " + id));
-        return new ImageFile(model.getFileName(), model.getContent());
+        return new ImageFile(entity.getId(), entity.getFileName(), entity.getContent());
     }
 }
+

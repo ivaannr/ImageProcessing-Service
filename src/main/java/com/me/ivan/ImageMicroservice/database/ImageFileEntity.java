@@ -1,18 +1,28 @@
-package com.me.ivan.ImageMicroservice.model;
+package com.me.ivan.ImageMicroservice.database;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import java.util.UUID;
 
-public class ImageFile {
+@Entity
+@Table(name = "image_files")
+public class ImageFileEntity {
+
+    @Id
+    @Column(length = 36)
     private String id;
+
+    @Column(length = 255)
     private String fileName;
+
+    @Lob
     private byte[] content;
 
-    public ImageFile(String id, String fileName, byte[] content) {
-        this.id = id;
+    public ImageFileEntity() {
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public ImageFileEntity(String fileName, byte[] content) {
+        this.id = UUID.randomUUID().toString();
         this.fileName = fileName;
         this.content = content;
     }
@@ -21,7 +31,6 @@ public class ImageFile {
     public String getFileName() { return fileName; }
     public byte[] getContent() { return content; }
 
-    public void setId(String id) { this.id = id; }
     public void setFileName(String fileName) { this.fileName = fileName; }
     public void setContent(byte[] content) { this.content = content; }
 }

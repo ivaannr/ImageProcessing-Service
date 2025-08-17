@@ -39,11 +39,14 @@ public class UploadController {
             List<String> allowedExtensions = List.of("png", "jpg", "jpeg", "gif", "bmp");
 
             if (!allowedExtensions.contains(extension)) {
-                return ResponseEntity.badRequest().body("Only image files are allowed! Supported: " + allowedExtensions);
+                return ResponseEntity.badRequest()
+                        .body("Only image files are allowed! Supported: " + allowedExtensions);
             }
 
             byte[] content = image.getBytes();
-            service.createImageFile(new ImageFile(filename, content));
+
+            ImageFile imageDto = new ImageFile(null, filename, content);
+            service.createImageFile(imageDto);
 
             return ResponseEntity.ok(String.format("Image %s has been uploaded correctly!", filename));
 

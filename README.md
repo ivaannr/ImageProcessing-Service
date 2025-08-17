@@ -20,7 +20,7 @@
 <li>Clone the repository:</li>
 </ol>
 <pre><code class="language-bash">git clone https://github.com/ivaannr/ImageProcessing-Service.git
-cd ImageMicroservice
+cd ImageProcessing-Service
 </code></pre>
 <ol start="2">
 <li>Build the project:</li>
@@ -71,6 +71,16 @@ cd ImageMicroservice
 <td>Upload a new image</td>
 </tr>
 <tr>
+<tr>
+<td>GET</td>
+<td><code>/images/view</code></td>
+<td>Render all images</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/images/view/{id}</code></td>
+<td>Render a image by ID</td>
+</tr>
 <td>GET</td>
 <td><code>/images/effect/{id}/{filter}</code></td>
 <td>Apply a filter to a image by ID</td>
@@ -95,6 +105,4 @@ cd ImageMicroservice
 <li>Ensure the frontend URL matches the CORS allowed origins.</li>
 </ul>
 <hr />
-
-
 

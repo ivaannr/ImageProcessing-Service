@@ -7,7 +7,7 @@
 <li>Stores images in a database.</li>
 <li>Configurable CORS for frontend integration.</li>
 <li>Automatically generates database tables.</li>
-<li>Users can interact with the database using the H2 console, to use the console start the application and open http://localhost:{port}/h2-console in the browser.</li>
+<li>Users can interact with the database using the H2 console, to use the console start the application and open <code>http://localhost:{port}/h2-console</code> in the browser.</li>
 </ul>
 <hr />
 <h2 id="getting-started">Getting Started</h2>
@@ -106,5 +106,6 @@ cd ImageProcessing-Service
 <li>Ensure the frontend URL matches the CORS allowed origins.</li>
 </ul>
 <hr />
+
 
 
